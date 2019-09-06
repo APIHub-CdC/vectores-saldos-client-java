@@ -78,7 +78,7 @@ openssl pkcs12 -name ${ALIAS} \
 
 ```
 
-- Generar un keystore dummy y eiminar su contenido.
+- Generar un keystore dummy y eliminar su contenido.
 
 ```sh
 #Genera un Keystore con un par de llaves dummy.
@@ -114,7 +114,7 @@ keytool -list -keystore ${KEYSTORE_FILE} \
  3. Seleccionar la aplicación.
  4. Ir a la pestaña de "**Certificados para @tuApp**".
 <p align="center">
-  <img src="https://github.com/APIHub-CdC/imagenes-cdc/blob/master/applications.png">
+  <img src="https://github.com/APIHub-CdC/imagenes-cdc/blob/master/applications.png" width="268">
 </p>
  5. Al abrirse la ventana emergente, seleccionar el certificado previamente creado y dar clic en el botón "**Cargar**":
 <p align="center">
@@ -128,7 +128,7 @@ keytool -list -keystore ${KEYSTORE_FILE} \
  3. Seleccionar la aplicación.
  4. Ir a la pestaña de "**Certificados para @tuApp**".
 <p align="center">
-  <img src="https://github.com/APIHub-CdC/imagenes-cdc/blob/master/applications.png">
+  <img src="https://github.com/APIHub-CdC/imagenes-cdc/blob/master/applications.png" width="268">
 </p>
 
  4. Al abrirse la ventana emergente, dar clic al botón "**Descargar**":

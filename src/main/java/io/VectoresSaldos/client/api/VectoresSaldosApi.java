@@ -1,18 +1,18 @@
-package io.apihub.client.api;
+package io.VectoresSaldos.client.api;
 
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 
-import io.apihub.client.ApiClient;
-import io.apihub.client.ApiException;
-import io.apihub.client.ApiResponse;
-import io.apihub.client.Configuration;
-import io.apihub.client.Pair;
-import io.apihub.client.ProgressRequestBody;
-import io.apihub.client.ProgressResponseBody;
-import io.apihub.client.model.Persona;
-import io.apihub.client.model.Response;
+import io.VectoresSaldos.client.ApiClient;
+import io.VectoresSaldos.client.ApiException;
+import io.VectoresSaldos.client.ApiResponse;
+import io.VectoresSaldos.client.Configuration;
+import io.VectoresSaldos.client.Pair;
+import io.VectoresSaldos.client.ProgressRequestBody;
+import io.VectoresSaldos.client.ProgressResponseBody;
+import io.VectoresSaldos.client.model.Persona;
+import io.VectoresSaldos.client.model.Response;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -22,31 +22,23 @@ import java.util.Map;
 
 public class VectoresSaldosApi {
     private ApiClient apiClient;
-
     public VectoresSaldosApi() {
         this(Configuration.getDefaultApiClient());
     }
-
     public VectoresSaldosApi(ApiClient apiClient) {
         this.apiClient = apiClient;
     }
-
     public ApiClient getApiClient() {
         return apiClient;
     }
-
     public void setApiClient(ApiClient apiClient) {
         this.apiClient = apiClient;
     }
-
     public okhttp3.Call vectoresSaldosCall(String xApiKey, String username, String password, Persona body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-
         String localVarPath = "/v1/vectores/saldos";
-
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         if (xApiKey != null)
         localVarHeaderParams.put("x-api-key", apiClient.parameterToString(xApiKey));
@@ -54,21 +46,17 @@ public class VectoresSaldosApi {
         localVarHeaderParams.put("username", apiClient.parameterToString(username));
         if (password != null)
         localVarHeaderParams.put("password", apiClient.parameterToString(password));
-
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
         final String[] localVarAccepts = {
             "*/*"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
         final String[] localVarContentTypes = {
             "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
-
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new okhttp3.Interceptor() {
                 @Override
@@ -80,11 +68,9 @@ public class VectoresSaldosApi {
                 }
             });
         }
-
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-
     private okhttp3.Call vectoresSaldosValidateBeforeCall(String xApiKey, String username, String password, Persona body) throws ApiException {
         
         if (xApiKey == null) {
@@ -103,12 +89,9 @@ public class VectoresSaldosApi {
             throw new ApiException("Missing the required parameter 'body' when calling vectoresSaldosCall(Async)");
         }
         
-
         okhttp3.Call call = vectoresSaldosCall(xApiKey, username, password, body, null, null);
         return call;
-
     }
-
     public Response getVectoresSaldos(String xApiKey, String username, String password, Persona body) throws ApiException {
         ApiResponse<Response> resp = getVectoresSaldosWithHttpInfo(xApiKey, username, password, body);
         return resp.getData();

@@ -1,4 +1,4 @@
-package io.apihub.interceptor;
+package io.VectoresSaldos.interceptor;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,11 +32,9 @@ public class Signer {
 	private Logger logger = LoggerFactory.getLogger(Signer.class.getName());
 	private PrivateKey privateKey;
 	private PublicKey publicKey;
-
 	public static Signer getInstance() {
 		return instance;
 	}
-
 	private Signer() {
 		InputStream input = null;
 		try {
@@ -56,7 +54,6 @@ public class Signer {
 			}
 		}
 	}
-
 	public String signPayload(String payload) {
 		String signature = null;
 		try {
@@ -98,7 +95,6 @@ public class Signer {
 		
 		return isVerify;
 	}
-
 	private PrivateKey readPrivateKeyFromKeystore() {
 		PrivateKey ecKey = null;
 		try {

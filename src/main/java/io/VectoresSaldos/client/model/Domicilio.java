@@ -1,4 +1,4 @@
-package io.apihub.client.model;
+package io.VectoresSaldos.client.model;
 
 import java.util.Objects;
 import com.google.gson.TypeAdapter;
@@ -9,25 +9,19 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
-
 @ApiModel(description = "Datos del domicilio de la persona a consultar")
 
 public class Domicilio {
   @SerializedName("direccion")
   private String direccion = null;
-
   @SerializedName("colonia")
   private String colonia = null;
-
   @SerializedName("ciudad")
   private String ciudad = null;
-
   @SerializedName("codigoPostal")
   private String codigoPostal = null;
-
   @SerializedName("municipio")
   private String municipio = null;
-
   @JsonAdapter(EstadoEnum.Adapter.class)
   public enum EstadoEnum {
     AGS("AGS"),
@@ -95,22 +89,17 @@ public class Domicilio {
     YUC("YUC"),
     
     ZAC("ZAC");
-
     private String value;
-
     EstadoEnum(String value) {
       this.value = value;
     }
-
     public String getValue() {
       return value;
     }
-
     @Override
     public String toString() {
       return String.valueOf(value);
     }
-
     public static EstadoEnum fromValue(String text) {
       for (EstadoEnum b : EstadoEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -119,13 +108,11 @@ public class Domicilio {
       }
       return null;
     }
-
     public static class Adapter extends TypeAdapter<EstadoEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final EstadoEnum enumeration) throws IOException {
         jsonWriter.value(enumeration.getValue());
       }
-
       @Override
       public EstadoEnum read(final JsonReader jsonReader) throws IOException {
         String value = jsonReader.nextString();
@@ -133,24 +120,19 @@ public class Domicilio {
       }
     }
   }
-
   @SerializedName("estado")
   private EstadoEnum estado = null;
-
   public Domicilio direccion(String direccion) {
     this.direccion = direccion;
     return this;
   }
-
   @ApiModelProperty(example = "HIDALGO 32", required = true, value = "Calle y número del domicilio")
   public String getDireccion() {
     return direccion;
   }
-
   public void setDireccion(String direccion) {
     this.direccion = direccion;
   }
-
   public Domicilio colonia(String colonia) {
     this.colonia = colonia;
     return this;
@@ -160,68 +142,53 @@ public class Domicilio {
   public String getColonia() {
     return colonia;
   }
-
   public void setColonia(String colonia) {
     this.colonia = colonia;
   }
-
   public Domicilio ciudad(String ciudad) {
     this.ciudad = ciudad;
     return this;
   }
-
   @ApiModelProperty(value = "Ciudad en que se ubica el domicilio")
   public String getCiudad() {
     return ciudad;
   }
-
   public void setCiudad(String ciudad) {
     this.ciudad = ciudad;
   }
-
   public Domicilio codigoPostal(String codigoPostal) {
     this.codigoPostal = codigoPostal;
     return this;
   }
-
   @ApiModelProperty(example = "47917", required = true, value = "Código postal al que pertenece el domicilio")
   public String getCodigoPostal() {
     return codigoPostal;
   }
-
   public void setCodigoPostal(String codigoPostal) {
     this.codigoPostal = codigoPostal;
   }
-
   public Domicilio municipio(String municipio) {
     this.municipio = municipio;
     return this;
   }
-
   @ApiModelProperty(example = "LA BARCA", required = true, value = "Municipio en que se ubica el domicilio")
   public String getMunicipio() {
     return municipio;
   }
-
   public void setMunicipio(String municipio) {
     this.municipio = municipio;
   }
-
   public Domicilio estado(EstadoEnum estado) {
     this.estado = estado;
     return this;
   }
-
   @ApiModelProperty(example = "JAL", required = true, value = "Estado en que se ubica el domicilio")
   public EstadoEnum getEstado() {
     return estado;
   }
-
   public void setEstado(EstadoEnum estado) {
     this.estado = estado;
   }
-
-
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -238,13 +205,10 @@ public class Domicilio {
         Objects.equals(this.municipio, domicilio.municipio) &&
         Objects.equals(this.estado, domicilio.estado);
   }
-
   @Override
   public int hashCode() {
     return Objects.hash(direccion, colonia, ciudad, codigoPostal, municipio, estado);
   }
-
-
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -259,13 +223,10 @@ public class Domicilio {
     sb.append("}");
     return sb.toString();
   }
-
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 }
-

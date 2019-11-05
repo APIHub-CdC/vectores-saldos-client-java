@@ -1,4 +1,4 @@
-package io.apihub.interceptor;
+package io.VectoresSaldos.interceptor;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
-import io.apihub.client.model.Error;
-import io.apihub.client.model.Errores;
+import io.VectoresSaldos.client.model.Error;
+import io.VectoresSaldos.client.model.Errores;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Protocol;
@@ -20,9 +20,7 @@ import okhttp3.Response.Builder;
 import okhttp3.ResponseBody;
 import okio.Buffer;
 
-
 public class SignerInterceptor implements Interceptor{
-
 	private Logger logger = LoggerFactory.getLogger(Signer.class.getName());
 	private Signer signer;
 	private Request newRequest;
@@ -40,7 +38,6 @@ public class SignerInterceptor implements Interceptor{
 	}
 	
 	private static String bodyToString(final Request request){
-
 	    try {
 	        final Request copy = request.newBuilder().build();
 	        final Buffer buffer = new Buffer();

@@ -1,27 +1,23 @@
-package io.apihub.client.model;
+package io.VectoresSaldos.client.model;
 
 import java.util.Objects;
 import com.google.gson.annotations.SerializedName;
 
-import io.apihub.client.model.Error;
+import io.VectoresSaldos.client.model.Error;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.ArrayList;
 import java.util.List;
-
-
 @ApiModel(description = "Si existen errores, se listarán.")
 
 public class Errores {
   @SerializedName("errors")
   private List<Error> errors = null;
-
   public Errores errors(List<Error> errors) {
     this.errors = errors;
     return this;
   }
-
   public Errores addErrorsItem(Error errorsItem) {
     if (this.errors == null) {
       this.errors = new ArrayList<Error>();
@@ -29,17 +25,13 @@ public class Errores {
     this.errors.add(errorsItem);
     return this;
   }
-
   @ApiModelProperty(value = "")
   public List<Error> getErrors() {
     return errors;
   }
-
   public void setErrors(List<Error> errors) {
     this.errors = errors;
   }
-
-
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -51,13 +43,10 @@ public class Errores {
     Errores errors = (Errores) o;
     return Objects.equals(this.errors, errors.errors);
   }
-
   @Override
   public int hashCode() {
     return Objects.hash(errors);
   }
-
-
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -67,13 +56,10 @@ public class Errores {
     sb.append("}");
     return sb.toString();
   }
-
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 }
-

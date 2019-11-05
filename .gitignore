@@ -1,5 +1,4 @@
 *.class
-
 # Eclipse
 .classpath
 .project
@@ -13,6 +12,8 @@
 # Mac
 .DS_Store
  
+#Prueba
+src/test/java/io/VectoresSaldos/client/api/ClientTest.java
 # Maven
 log/
 target/
@@ -20,6 +21,5 @@ bin/
 .mvn/
 .springBeans
 \.factorypath
-
 # security
 *.jks

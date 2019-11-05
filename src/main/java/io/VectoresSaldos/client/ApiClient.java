@@ -1,4 +1,4 @@
-package io.apihub.client;
+package io.VectoresSaldos.client;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
@@ -30,57 +30,45 @@ import okhttp3.Response;
 import okhttp3.internal.http.HttpMethod;
 
 public class ApiClient {
-
     private String basePath = "";
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
     private String tempFolderPath = null;
     private JSON json;
-
     private OkHttpClient httpClient;
-
     public ApiClient() {
         httpClient = new OkHttpClient();
         json = new JSON();
         setUserAgent("APIHub-Codegen/1.0.0/java");
     }
-
     public String getBasePath() {
         return basePath;
     }
-
     public ApiClient setBasePath(String basePath) {
         this.basePath = basePath;
         return this;
     }
-
     public OkHttpClient getHttpClient() {
         return httpClient;
     }
-
     public ApiClient setHttpClient(OkHttpClient httpClient) {
         this.httpClient = httpClient;
         return this;
     }
-
     public ApiClient setUserAgent(String userAgent) {
         addDefaultHeader("User-Agent", userAgent);
         return this;
     }
-
     public ApiClient addDefaultHeader(String key, String value) {
         defaultHeaderMap.put(key, value);
         return this;
     }
-
     public String getTempFolderPath() {
         return tempFolderPath;
     }
-
     public ApiClient setTempFolderPath(String tempFolderPath) {
         this.tempFolderPath = tempFolderPath;
         return this;
     }
-
     @SuppressWarnings("rawtypes")
 	public String parameterToString(Object param) {
         if (param == null) {
@@ -101,33 +89,25 @@ public class ApiClient {
             return String.valueOf(param);
         }
     }
-
     public List<Pair> parameterToPair(String name, Object value) {
         List<Pair> params = new ArrayList<Pair>();
-
         if (name == null || name.isEmpty() || value == null || value instanceof Collection) return params;
-
         params.add(new Pair(name, parameterToString(value)));
         return params;
     }
-
     @SuppressWarnings("rawtypes")
 	public List<Pair> parameterToPairs(String collectionFormat, String name, Collection value) {
         List<Pair> params = new ArrayList<Pair>();
-
         if (name == null || name.isEmpty() || value == null || value.isEmpty()) {
             return params;
         }
-
         if ("multi".equals(collectionFormat)) {
             for (Object item : value) {
                 params.add(new Pair(name, escapeString(parameterToString(item))));
             }
             return params;
         }
-
         String delimiter = ",";
-
         if ("ssv".equals(collectionFormat)) {
             delimiter = escapeString(" ");
         } else if ("tsv".equals(collectionFormat)) {
@@ -135,27 +115,21 @@ public class ApiClient {
         } else if ("pipes".equals(collectionFormat)) {
             delimiter = escapeString("|");
         }
-
         StringBuilder sb = new StringBuilder() ;
         for (Object item : value) {
             sb.append(delimiter);
             sb.append(escapeString(parameterToString(item)));
         }
-
         params.add(new Pair(name, sb.substring(delimiter.length())));
-
         return params;
     }
-
     public String sanitizeFilename(String filename) {
         return filename.replaceAll(".*[/\\\\]", "");
     }
-
     public boolean isJsonMime(String mime) {
       String jsonMime = "(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$";
       return mime != null && (mime.matches(jsonMime) || mime.equals("*/*"));
     }
-
     public String selectHeaderAccept(String[] accepts) {
         if (accepts.length == 0) {
             return null;
@@ -167,7 +141,6 @@ public class ApiClient {
         }
         return StringUtil.join(accepts, ",");
     }
-
     public String selectHeaderContentType(String[] contentTypes) {
         if (contentTypes.length == 0 || contentTypes[0].equals("*/*")) {
              return "application/json";
@@ -179,7 +152,6 @@ public class ApiClient {
         }
         return contentTypes[0];
     }
-
     public String escapeString(String str) {
         try {
             return URLEncoder.encode(str, "utf8").replaceAll("\\+", "%20");
@@ -187,13 +159,11 @@ public class ApiClient {
             return str;
         }
     }
-
     @SuppressWarnings("unchecked")
     public <T> T deserialize(Response response, Type returnType) throws ApiException {
         if (response == null || returnType == null) {
             return null;
         }
-
         if ("byte[]".equals(returnType.toString())) {
             try {
                 return (T) response.body().bytes();
@@ -201,7 +171,6 @@ public class ApiClient {
                 throw new ApiException(e);
             }
         }
-
         String respBody;
         try {
             if (response.body() != null)
@@ -211,11 +180,9 @@ public class ApiClient {
         } catch (IOException e) {
             throw new ApiException(e);
         }
-
         if (respBody == null || "".equals(respBody)) {
             return null;
         }
-
         String contentType = response.headers().get("Content-Type");
         if (contentType == null) {
             contentType = "application/json";
@@ -232,7 +199,6 @@ public class ApiClient {
                     respBody);
         }
     }
-
     public RequestBody serialize(Object obj, String contentType) throws ApiException {
         if (obj instanceof byte[]) {
             return RequestBody.create(MediaType.parse(contentType), (byte[]) obj);
@@ -250,7 +216,6 @@ public class ApiClient {
             throw new ApiException("Content type \"" + contentType + "\" is not supported");
         }
     }
-
     public File prepareDownloadFile(Response response) throws IOException {
         String filename = null;
         String contentDisposition = response.header("Content-Disposition");
@@ -261,7 +226,6 @@ public class ApiClient {
                 filename = sanitizeFilename(matcher.group(1));
             }
         }
-
         String prefix = null;
         String suffix = null;
         if (filename == null) {
@@ -278,17 +242,14 @@ public class ApiClient {
             if (prefix.length() < 3)
                 prefix = "download-";
         }
-
         if (tempFolderPath == null)
             return File.createTempFile(prefix, suffix);
         else
             return File.createTempFile(prefix, suffix, new File(tempFolderPath));
     }
-
     public <T> ApiResponse<T> execute(Call call) throws ApiException {
         return execute(call, null);
     }
-
     public <T> ApiResponse<T> execute(Call call, Type returnType) throws ApiException {
         try {
             Response response = call.execute();
@@ -298,7 +259,6 @@ public class ApiClient {
             throw new ApiException(e);
         }
     }
-
     public <T> T handleResponse(Response response, Type returnType) throws ApiException {
         if (response.isSuccessful()) {
             if (returnType == null || response.code() == 204) {
@@ -321,25 +281,18 @@ public class ApiClient {
             throw new ApiException(response.message(), response.code(), response.headers().toMultimap(), respBody);
         }
     }
-
     public Call buildCall(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Request request = buildRequest(path, method, queryParams, collectionQueryParams, body, headerParams, formParams, authNames, progressRequestListener);
-
         return httpClient.newCall(request);
     }
-
     public Request buildRequest(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-
         final String url = buildUrl(path, queryParams, collectionQueryParams);
         final Request.Builder reqBuilder = new Request.Builder().url(url);
         processHeaderParams(headerParams, reqBuilder);
-
         String contentType = (String) headerParams.get("Content-Type");
-        // ensuring a default content type
         if (contentType == null) {
             contentType = "application/json";
         }
-
         RequestBody reqBody;
         if (!HttpMethod.permitsRequestBody(method)) {
             reqBody = null;
@@ -352,23 +305,18 @@ public class ApiClient {
         } else {
             reqBody = serialize(body, contentType);
         }
-
         Request request = null;
-
         if(progressRequestListener != null && reqBody != null) {
             ProgressRequestBody progressRequestBody = new ProgressRequestBody(reqBody, progressRequestListener);
             request = reqBuilder.method(method, progressRequestBody).build();
         } else {
             request = reqBuilder.method(method, reqBody).build();
         }
-
         return request;
     }
-
     public String buildUrl(String path, List<Pair> queryParams, List<Pair> collectionQueryParams) {
         final StringBuilder url = new StringBuilder();
         url.append(basePath).append(path);
-
         if (queryParams != null && !queryParams.isEmpty()) {
             String prefix = path.contains("?") ? "&" : "?";
             for (Pair param : queryParams) {
@@ -384,7 +332,6 @@ public class ApiClient {
                 }
             }
         }
-
         if (collectionQueryParams != null && !collectionQueryParams.isEmpty()) {
             String prefix = url.toString().contains("?") ? "&" : "?";
             for (Pair param : collectionQueryParams) {
@@ -400,10 +347,8 @@ public class ApiClient {
                 }
             }
         }
-
         return url.toString();
     }
-
     public void processHeaderParams(Map<String, String> headerParams, Request.Builder reqBuilder) {
         for (Entry<String, String> param : headerParams.entrySet()) {
             reqBuilder.header(param.getKey(), parameterToString(param.getValue()));
@@ -423,18 +368,15 @@ public class ApiClient {
 				public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType)
 						throws CertificateException {
 				}
-
 				@Override
 				public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType)
 						throws CertificateException {
 				}
-
 				@Override
 				public java.security.cert.X509Certificate[] getAcceptedIssuers() {
 					return new java.security.cert.X509Certificate[] {};
 				}
 			} };
-
 			final SSLContext sslContext = SSLContext.getInstance("SSL");
 			sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
 			final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
@@ -446,7 +388,6 @@ public class ApiClient {
 							return true;
 						}
 					});
-
 			return okHttpClient.build();
 		} catch (Exception e) {
 			throw new RuntimeException(e);

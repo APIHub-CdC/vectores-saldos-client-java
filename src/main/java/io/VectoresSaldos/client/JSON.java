@@ -1,4 +1,4 @@
-package io.apihub.client;
+package io.VectoresSaldos.client;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -30,14 +30,12 @@ public class JSON {
     private OffsetDateTimeTypeAdapter offsetDateTimeTypeAdapter = new OffsetDateTimeTypeAdapter();
     private LocalDateTypeAdapter localDateTypeAdapter = new LocalDateTypeAdapter();
     private ByteArrayAdapter byteArrayAdapter = new ByteArrayAdapter();
-
     public static GsonBuilder createGson() {
         GsonFireBuilder fireBuilder = new GsonFireBuilder()
         ;
         GsonBuilder builder = fireBuilder.createGsonBuilder();
         return builder;
     }
-
     public JSON() {
         gson = createGson()
             .registerTypeAdapter(Date.class, dateTypeAdapter)
@@ -47,25 +45,20 @@ public class JSON {
             .registerTypeAdapter(byte[].class, byteArrayAdapter)
             .create();
     }
-
     public Gson getGson() {
         return gson;
     }
-
     public JSON setGson(Gson gson) {
         this.gson = gson;
         return this;
     }
-
     public JSON setLenientOnJson(boolean lenientOnJson) {
         isLenientOnJson = lenientOnJson;
         return this;
     }
-
     public String serialize(Object obj) {
         return gson.toJson(obj);
     }
-
     @SuppressWarnings("unchecked")
     public <T> T deserialize(String body, Type returnType) {
         try {
@@ -83,9 +76,7 @@ public class JSON {
             else throw (e);
         }
     }
-
     public class ByteArrayAdapter extends TypeAdapter<byte[]> {
-
         @Override
         public void write(JsonWriter out, byte[] value) throws IOException {
             if (value == null) {
@@ -94,7 +85,6 @@ public class JSON {
                 out.value(ByteString.of(value).base64());
             }
         }
-
         @Override
         public byte[] read(JsonReader in) throws IOException {
             switch (in.peek()) {
@@ -108,23 +98,17 @@ public class JSON {
             }
         }
     }
-
     public static class OffsetDateTimeTypeAdapter extends TypeAdapter<OffsetDateTime> {
-
         private DateTimeFormatter formatter;
-
         public OffsetDateTimeTypeAdapter() {
             this(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
         }
-
         public OffsetDateTimeTypeAdapter(DateTimeFormatter formatter) {
             this.formatter = formatter;
         }
-
         public void setFormat(DateTimeFormatter dateFormat) {
             this.formatter = dateFormat;
         }
-
         @Override
         public void write(JsonWriter out, OffsetDateTime date) throws IOException {
             if (date == null) {
@@ -133,7 +117,6 @@ public class JSON {
                 out.value(formatter.format(date));
             }
         }
-
         @Override
         public OffsetDateTime read(JsonReader in) throws IOException {
             switch (in.peek()) {
@@ -149,23 +132,17 @@ public class JSON {
             }
         }
     }
-
     public class LocalDateTypeAdapter extends TypeAdapter<LocalDate> {
-
         private DateTimeFormatter formatter;
-
         public LocalDateTypeAdapter() {
             this(DateTimeFormatter.ISO_LOCAL_DATE);
         }
-
         public LocalDateTypeAdapter(DateTimeFormatter formatter) {
             this.formatter = formatter;
         }
-
         public void setFormat(DateTimeFormatter dateFormat) {
             this.formatter = dateFormat;
         }
-
         @Override
         public void write(JsonWriter out, LocalDate date) throws IOException {
             if (date == null) {
@@ -174,7 +151,6 @@ public class JSON {
                 out.value(formatter.format(date));
             }
         }
-
         @Override
         public LocalDate read(JsonReader in) throws IOException {
             switch (in.peek()) {
@@ -187,32 +163,24 @@ public class JSON {
             }
         }
     }
-
     public JSON setOffsetDateTimeFormat(DateTimeFormatter dateFormat) {
         offsetDateTimeTypeAdapter.setFormat(dateFormat);
         return this;
     }
-
     public JSON setLocalDateFormat(DateTimeFormatter dateFormat) {
         localDateTypeAdapter.setFormat(dateFormat);
         return this;
     }
-
     public static class SqlDateTypeAdapter extends TypeAdapter<java.sql.Date> {
-
         private DateFormat dateFormat;
-
         public SqlDateTypeAdapter() {
         }
-
         public SqlDateTypeAdapter(DateFormat dateFormat) {
             this.dateFormat = dateFormat;
         }
-
         public void setFormat(DateFormat dateFormat) {
             this.dateFormat = dateFormat;
         }
-
         @Override
         public void write(JsonWriter out, java.sql.Date date) throws IOException {
             if (date == null) {
@@ -227,7 +195,6 @@ public class JSON {
                 out.value(value);
             }
         }
-
         @Override
         public java.sql.Date read(JsonReader in) throws IOException {
             switch (in.peek()) {
@@ -247,22 +214,16 @@ public class JSON {
             }
         }
     }
-
     public static class DateTypeAdapter extends TypeAdapter<Date> {
-
         private DateFormat dateFormat;
-
         public DateTypeAdapter() {
         }
-
         public DateTypeAdapter(DateFormat dateFormat) {
             this.dateFormat = dateFormat;
         }
-
         public void setFormat(DateFormat dateFormat) {
             this.dateFormat = dateFormat;
         }
-
         @Override
         public void write(JsonWriter out, Date date) throws IOException {
             if (date == null) {
@@ -277,7 +238,6 @@ public class JSON {
                 out.value(value);
             }
         }
-
         @Override
         public Date read(JsonReader in) throws IOException {
             try {
@@ -301,15 +261,12 @@ public class JSON {
             }
         }
     }
-
     public JSON setDateFormat(DateFormat dateFormat) {
         dateTypeAdapter.setFormat(dateFormat);
         return this;
     }
-
     public JSON setSqlDateFormat(DateFormat dateFormat) {
         sqlDateTypeAdapter.setFormat(dateFormat);
         return this;
     }
-
 }
